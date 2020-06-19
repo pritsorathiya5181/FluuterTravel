@@ -1,3 +1,5 @@
+import 'package:FlutterTravel/widgets/destination_carousel.dart';
+import 'package:FlutterTravel/widgets/hotel_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -66,13 +68,17 @@ class _HomeScreenState extends State<HomeScreen> {
             //   _buildIcon(1),
             //   _buildIcon(2),
             //   _buildIcon(3),
-            // ],
+            // ], we can use both option above and belowe
             children: _icons
                 .asMap()
                 .entries
                 .map((MapEntry e) => _buildIcon(e.key))
                 .toList(),
-          )
+          ),
+          SizedBox(height: 20.0),
+          DestinationCarousel(),
+          SizedBox(height: 20.0),
+          HotelCarousel(),
         ],
       )),
     );
