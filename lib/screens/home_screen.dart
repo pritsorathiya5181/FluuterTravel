@@ -10,6 +10,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  int _currentTab = 0;
 
   List<IconData> _icons = [
     FontAwesomeIcons.plane,
@@ -50,37 +51,69 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: ListView(
-        padding: EdgeInsets.symmetric(vertical: 30.0),
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 20.0, right: 120.0),
-            child: Text(
-              'What you would like to find?',
-              style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+        child: ListView(
+          padding: EdgeInsets.symmetric(vertical: 30.0),
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 120.0),
+              child: Text(
+                'What you would like to find?',
+                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+              ),
             ),
+            SizedBox(height: 20.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // children: <Widget>[
+              //   _buildIcon(0),
+              //   _buildIcon(1),
+              //   _buildIcon(2),
+              //   _buildIcon(3),
+              // ], we can use both option above and belowe
+              children: _icons
+                  .asMap()
+                  .entries
+                  .map((MapEntry e) => _buildIcon(e.key))
+                  .toList(),
+            ),
+            SizedBox(height: 20.0),
+            DestinationCarousel(),
+            SizedBox(height: 20.0),
+            HotelCarousel(),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentTab,
+        onTap: (int value) {
+          setState(() {
+            _currentTab = value;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search,
+              size: 30.0,
+            ),
+            title: SizedBox.shrink(),
+          ),  
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.local_pizza,
+              size: 30.0,
+            ),
+            title: SizedBox.shrink(),
           ),
-          SizedBox(height: 20.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            // children: <Widget>[
-            //   _buildIcon(0),
-            //   _buildIcon(1),
-            //   _buildIcon(2),
-            //   _buildIcon(3),
-            // ], we can use both option above and belowe
-            children: _icons
-                .asMap()
-                .entries
-                .map((MapEntry e) => _buildIcon(e.key))
-                .toList(),
-          ),
-          SizedBox(height: 20.0),
-          DestinationCarousel(),
-          SizedBox(height: 20.0),
-          HotelCarousel(),
+          BottomNavigationBarItem(
+            icon: CircleAvatar(
+              backgroundImage: NetworkImage('https://i.imgur.com/zL4Krbz.jpg'),
+              radius: 15.0,
+            ),
+            title: SizedBox.shrink(),
+          )
         ],
-      )),
+      ),
     );
   }
 }
